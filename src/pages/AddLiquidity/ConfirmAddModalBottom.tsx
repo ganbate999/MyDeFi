@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Fraction, Percent } from '@pancakeswap-libs/sdk-v2'
+import { Currency, CurrencyAmount, Fraction, Percent } from 'cd3d-dex-libs-sdk'
 import React from 'react'
 import { Button, Text } from '@pancakeswap-libs/uikit'
 import { TranslateString } from 'utils/translateTextHelpers'

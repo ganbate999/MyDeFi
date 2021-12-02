@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { AddressZero } from '@ethersproject/constants'
-import { TokenAmount, Token, ChainId, Percent, JSBI } from '@pancakeswap-libs/sdk-v2'
+import { TokenAmount, Token, ChainId, Percent, JSBI } from 'cd3d-dex-libs-sdk'
 
 import {
   getBscScanLink,

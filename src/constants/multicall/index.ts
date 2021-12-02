@@ -1,4 +1,4 @@
-import { ChainId } from '@pancakeswap-libs/sdk-v2'
+import { ChainId } from 'cd3d-dex-libs-sdk'
 import MULTICALL_ABI from './abi.json'
 
 const MULTICALL_NETWORKS: { [chainId in ChainId]: string } = {

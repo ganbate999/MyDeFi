@@ -19,12 +19,12 @@
       "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png"
     },
     {
-      "name": "Bakery Token",
-      "symbol": "BAKE",
-      "address": "0xe02df9e3e622debdd69fb838bb799e3f168902c5",
+      "name": "CinemaDraft Token",
+      "symbol": "CD3D",
+      "address": "0xFd4C59960Ba11F34a978a737E63ff6ECa9aB4979",
       "chainId": 97,
-      "decimals": 18,
-      "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xe02df9e3e622debdd69fb838bb799e3f168902c5.png"
+      "decimals": 9,
+      "logoURI": "https://cd3d-silk.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fimage%2Fpublic%2Fassets%2Fhomepage%2FCD3D-icon.a5ce81350528aa0476a4e4871660a9a9.svg&w=32&q=75"
     },
     {
       "name": "BUSD Token",

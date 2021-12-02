@@ -1,4 +1,4 @@
-import { Token } from '@pancakeswap-libs/sdk-v2'
+import { Token } from 'cd3d-dex-libs-sdk'
 import { transparentize } from 'polished'
 import { Button, Text } from '@pancakeswap-libs/uikit'
 import React, { useCallback, useMemo, useState } from 'react'

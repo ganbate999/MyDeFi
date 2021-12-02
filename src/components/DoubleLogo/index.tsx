@@ -1,4 +1,4 @@
-import { Currency } from '@pancakeswap-libs/sdk-v2'
+import { Currency } from 'cd3d-dex-libs-sdk'
 import React from 'react'
 import styled from 'styled-components'
 import CurrencyLogo from '../CurrencyLogo'

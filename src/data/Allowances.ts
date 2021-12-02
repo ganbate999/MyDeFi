@@ -1,4 +1,4 @@
-import { Token, TokenAmount } from '@pancakeswap-libs/sdk-v2'
+import { Token, TokenAmount } from 'cd3d-dex-libs-sdk'
 import { useMemo } from 'react'
 
 import { useTokenContract } from '../hooks/useContract'

@@ -1,4 +1,4 @@
-import { ChainId, JSBI, Pair, Route, Token, TokenAmount, Trade, TradeType } from '@pancakeswap-libs/sdk-v2'
+import { ChainId, JSBI, Pair, Route, Token, TokenAmount, Trade, TradeType } from 'cd3d-dex-libs-sdk'
 import { computeTradePriceBreakdown } from './prices'
 
 describe('prices', () => {

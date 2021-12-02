@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { Card, CardHeader, CardBody, Text, Box } from '@pancakeswap-libs/uikit'
-import { Pair } from '@pancakeswap-libs/sdk-v2'
+import { Pair } from 'cd3d-dex-libs-sdk'
 import { useTokenBalancesWithLoadingIndicator } from 'state/wallet/hooks'
 import { toV2LiquidityToken, useTrackedTokenPairs } from 'state/user/hooks'
 import { StyledInternalLink } from 'components/Shared'

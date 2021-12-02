@@ -1,4 +1,4 @@
-import { ChainId } from '@pancakeswap-libs/sdk-v2'
+import { ChainId } from 'cd3d-dex-libs-sdk'
 import React, { useContext } from 'react'
 import { ThemeContext } from 'styled-components'
 import { Button, LinkExternal } from '@pancakeswap-libs/uikit'

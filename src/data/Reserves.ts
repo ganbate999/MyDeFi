@@ -1,4 +1,4 @@
-import { TokenAmount, Pair, Currency } from '@pancakeswap-libs/sdk-v2'
+import { TokenAmount, Pair, Currency } from 'cd3d-dex-libs-sdk'
 import { useMemo } from 'react'
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import { Interface } from '@ethersproject/abi'

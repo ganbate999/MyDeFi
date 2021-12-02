@@ -1,4 +1,4 @@
-import { ChainId, Token } from '@pancakeswap-libs/sdk-v2'
+import { ChainId, Token } from 'cd3d-dex-libs-sdk'
 import { Tags, TokenInfo, TokenList } from '@uniswap/token-lists'
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'

@@ -1,4 +1,4 @@
-import { ChainId } from '@pancakeswap-libs/sdk-v2'
+import { ChainId } from 'cd3d-dex-libs-sdk'
 import { createStore, Store } from 'redux'
 import { addTransaction, checkedTransaction, clearAllTransactions, finalizeTransaction } from './actions'
 import reducer, { initialState, TransactionState } from './reducer'

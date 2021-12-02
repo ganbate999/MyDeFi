@@ -1,4 +1,4 @@
-import { ChainId, Currency, CurrencyAmount, ETHER, Token, TokenAmount, WETH } from '@pancakeswap-libs/sdk-v2'
+import { ChainId, Currency, CurrencyAmount, ETHER, Token, TokenAmount, WETH } from 'cd3d-dex-libs-sdk'
 
 export function wrappedCurrency(currency: Currency | undefined, chainId: ChainId | undefined): Token | undefined {
   // eslint-disable-next-line no-nested-ternary

@@ -10,7 +10,7 @@
 
 Since there isn't an official PancakeSwap on testnet and the v2 frontend swap interface code isn't published on the [PancakeSwap github](https://github.com/pancakeswap) I decided to adjust [`pancake-swap-interface-v1`](https://github.com/pancakeswap/pancake-swap-interface-v1) for v2 routers on the BSC testnet as per [this comment on issue #365](https://github.com/pancakeswap/pancake-swap-interface-v1/issues/365#issuecomment-845603976).
 
-This fork requires a fork of [`@pancakeswap-libs/sdk-v2`](https://github.com/pancakeswap/pancakeswap-sdk-v2), instructions and code can at [https://github.com/ibhagwan/pancakeswap-sdk-v2](https://github.com/ibhagwan/pancakeswap-sdk-v2).
+This fork requires a fork of [`cd3d-dex-libs-sdk`](https://github.com/pancakeswap/pancakeswap-sdk-v2), instructions and code can at [https://github.com/ibhagwan/pancakeswap-sdk-v2](https://github.com/ibhagwan/pancakeswap-sdk-v2).
 
 ## Step 1: Build `pancakeswap-sdk-v2`
 
@@ -56,7 +56,7 @@ Modify `ROUTER_ADDRESS` in `src/constants/index.ts`
 
 Edit the tokens you'd like to appear in the UI in `src/constants/token/pancakeswap.json` (change the token `address` and set `chainId` to 97)
 
-Search the entire project for `'@pancakeswap-libs/sdk'` and replace with `'@pancakeswap-libs/sdk-v2'`
+Search the entire project for `'cd3d-dex-libs-sdk'` and replace with `'cd3d-dex-libs-sdk'`
 > I do this with vim, search the entire project with `fzf|rg` into a quickfix list and use
 > `:cdo %s/'@pancakeswap-libs\/sdk'/'@pancakeswap-libs\/sdk-v2'/g`
 
@@ -64,7 +64,7 @@ Search the entire project for `'@pancakeswap-libs/sdk'` and replace with `'@panc
 ```
 ❯ yarn
 ❯ npm install ../pancakeswap-sdk-v2
-❯ rm -rf ./node_modules/@pancakeswap-libs/sdk
+❯ rm -rf ./node_modules/cd3d-dex-libs-sdk
 ❯ yarn start
 
 Starting the development server...

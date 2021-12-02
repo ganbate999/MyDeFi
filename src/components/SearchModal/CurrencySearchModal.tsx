@@ -1,4 +1,4 @@
-import { Currency } from '@pancakeswap-libs/sdk-v2'
+import { Currency } from 'cd3d-dex-libs-sdk'
 import React, { useCallback, useEffect, useState } from 'react'
 import useLast from '../../hooks/useLast'
 import { useSelectedListUrl } from '../../state/lists/hooks'
