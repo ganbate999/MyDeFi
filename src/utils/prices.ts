@@ -1,32 +1,31 @@
-import { CurrencyAmount, Fraction, JSBI, Percent, Price, TokenAmount, Trade } from '@pancakeswap/sdk'
+import { CurrencyAmount, Fraction, JSBI, Percent, TokenAmount, Trade } from '@pancakeswap-libs/sdk-v2'
 import {
   BLOCKED_PRICE_IMPACT_NON_EXPERT,
   ALLOWED_PRICE_IMPACT_HIGH,
   ALLOWED_PRICE_IMPACT_LOW,
   ALLOWED_PRICE_IMPACT_MEDIUM,
-} from '../config/constants'
+} from '../constants'
 
 import { Field } from '../state/swap/actions'
 import { basisPointsToPercent } from './index'
 
-const BASE_FEE = new Percent(JSBI.BigInt(25), JSBI.BigInt(10000))
+const BASE_FEE = new Percent(JSBI.BigInt(20), JSBI.BigInt(10000))
 const ONE_HUNDRED_PERCENT = new Percent(JSBI.BigInt(10000), JSBI.BigInt(10000))
 const INPUT_FRACTION_AFTER_FEE = ONE_HUNDRED_PERCENT.subtract(BASE_FEE)
 
 // computes price breakdown for the trade
-export function computeTradePriceBreakdown(trade?: Trade | null): {
-  priceImpactWithoutFee: Percent | undefined
-  realizedLPFee: CurrencyAmount | undefined | null
-} {
-  // for each hop in our trade, take away the x*y=k price impact from 0.3% fees
-  // e.g. for 3 tokens/2 hops: 1 - ((1 - .03) * (1-.03))
+export function computeTradePriceBreakdown(
+  trade?: Trade
+): { priceImpactWithoutFee?: Percent; realizedLPFee?: CurrencyAmount } {
+  // for each hop in our trade, take away the x*y=k price impact from 0.2% fees
+  // e.g. for 3 tokens/2 hops: 1 - ((1 - .02) * (1-.02))
   const realizedLPFee = !trade
     ? undefined
     : ONE_HUNDRED_PERCENT.subtract(
         trade.route.pairs.reduce<Fraction>(
           (currentFee: Fraction): Fraction => currentFee.multiply(INPUT_FRACTION_AFTER_FEE),
-          ONE_HUNDRED_PERCENT,
-        ),
+          ONE_HUNDRED_PERCENT
+        )
       )
 
   // remove lp fees from price impact
@@ -51,7 +50,7 @@ export function computeTradePriceBreakdown(trade?: Trade | null): {
 // computes the minimum amount out and maximum amount in for a trade given a user specified allowed slippage in bips
 export function computeSlippageAdjustedAmounts(
   trade: Trade | undefined,
-  allowedSlippage: number,
+  allowedSlippage: number
 ): { [field in Field]?: CurrencyAmount } {
   const pct = basisPointsToPercent(allowedSlippage)
   return {
@@ -79,15 +78,4 @@ export function formatExecutionPrice(trade?: Trade, inverted?: boolean): string 
     : `${trade.executionPrice.toSignificant(6)} ${trade.outputAmount.currency.symbol} / ${
         trade.inputAmount.currency.symbol
       }`
-}
-
-/**
- * Helper to multiply a Price object by an arbitrary amount
- */
-export const multiplyPriceByAmount = (price: Price, amount: number, significantDigits = 18) => {
-  if (!price) {
-    return 0
-  }
-
-  return parseFloat(price.toSignificant(significantDigits)) * amount
 }

@@ -1,17 +1,17 @@
 import React from 'react'
-import { ChainId, Currency, currencyEquals, ETHER, Token } from '@pancakeswap/sdk'
-import { Text } from '@pancakeswap/uikit'
+import { Text } from '@pancakeswap-libs/uikit'
+import { ChainId, Currency, currencyEquals, ETHER, Token } from '@pancakeswap-libs/sdk-v2'
 import styled from 'styled-components'
-import { useTranslation } from 'contexts/Localization'
 
-import { SUGGESTED_BASES } from '../../config/constants'
-import { AutoColumn } from '../Layout/Column'
+import useI18n from 'hooks/useI18n'
+import { SUGGESTED_BASES } from '../../constants'
+import { AutoColumn } from '../Column'
 import QuestionHelper from '../QuestionHelper'
-import { AutoRow } from '../Layout/Row'
-import { CurrencyLogo } from '../Logo'
+import { AutoRow } from '../Row'
+import CurrencyLogo from '../CurrencyLogo'
 
 const BaseWrapper = styled.div<{ disable?: boolean }>`
-  border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.colors.dropdown)};
+  border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.colors.tertiary)};
   border-radius: 10px;
   display: flex;
   padding: 6px;
@@ -19,10 +19,10 @@ const BaseWrapper = styled.div<{ disable?: boolean }>`
   align-items: center;
   :hover {
     cursor: ${({ disable }) => !disable && 'pointer'};
-    background-color: ${({ theme, disable }) => !disable && theme.colors.background};
+    background-color: ${({ theme, disable }) => !disable && theme.colors.invertedContrast};
   }
 
-  background-color: ${({ theme, disable }) => disable && theme.colors.dropdown};
+  background-color: ${({ theme, disable }) => disable && theme.colors.tertiary};
   opacity: ${({ disable }) => disable && '0.4'};
 `
 
@@ -35,14 +35,14 @@ export default function CommonBases({
   selectedCurrency?: Currency | null
   onSelect: (currency: Currency) => void
 }) {
-  const { t } = useTranslation()
+  const TranslateString = useI18n()
   return (
     <AutoColumn gap="md">
       <AutoRow>
-        <Text fontSize="14px">{t('Common bases')}</Text>
-        <QuestionHelper text={t('These tokens are commonly paired with other tokens.')} ml="4px" />
+        <Text fontSize="14px">Common bases</Text>
+        <QuestionHelper text={TranslateString(1204, 'These tokens are commonly paired with other tokens.')} />
       </AutoRow>
-      <AutoRow gap="auto">
+      <AutoRow gap="4px">
         <BaseWrapper
           onClick={() => {
             if (!selectedCurrency || !currencyEquals(selectedCurrency, ETHER)) {

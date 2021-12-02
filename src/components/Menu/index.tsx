@@ -1,45 +1,37 @@
-import React from 'react'
-import { useLocation } from 'react-router'
-import { Menu as UikitMenu } from '@pancakeswap/uikit'
-import { languageList } from 'config/localization/languages'
-import { useTranslation } from 'contexts/Localization'
-import PhishingWarningBanner from 'components/PhishingWarningBanner'
+import React, { useContext } from 'react'
+import { Menu as UikitMenu} from '@pancakeswap-libs/uikit'
+import { useWeb3React } from '@web3-react/core'
+import { allLanguages } from 'constants/localisation/languageCodes'
+import { LanguageContext } from 'hooks/LanguageContext'
 import useTheme from 'hooks/useTheme'
-import { usePriceCakeBusd } from 'state/farms/hooks'
-import { usePhishingBannerManager } from 'state/user/hooks'
-import config from './config/config'
-import UserMenu from './UserMenu'
-import GlobalSettings from './GlobalSettings'
-import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
-import { footerLinks } from './config/footerConfig'
+import useGetPriceData from 'hooks/useGetPriceData'
+import useGetLocalProfile from 'hooks/useGetLocalProfile'
+import useAuth from 'hooks/useAuth'
+import links from './config'
+import { CAKE } from '../../constants'
 
-const Menu = (props) => {
+const Menu: React.FC = (props) => {
+  const { account } = useWeb3React()
+  const { login, logout } = useAuth()
+  const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
   const { isDark, toggleTheme } = useTheme()
-  const cakePriceUsd = usePriceCakeBusd()
-  const { currentLanguage, setLanguage, t } = useTranslation()
-  const { pathname } = useLocation()
-  const [showPhishingWarningBanner] = usePhishingBannerManager()
-
-  const activeMenuItem = getActiveMenuItem({ menuConfig: config(t), pathname })
-  const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
+  const priceData = useGetPriceData()
+  const cakePriceUsd = priceData ? Number(priceData.data[CAKE.address].price) : undefined
+  const profile = useGetLocalProfile()
 
   return (
     <UikitMenu
-      userMenu={<UserMenu />}
-      globalMenu={<GlobalSettings />}
-      banner={showPhishingWarningBanner && <PhishingWarningBanner />}
+      links={links}
+      account={account as string}
+      login={login}
+      logout={logout}
       isDark={isDark}
       toggleTheme={toggleTheme}
-      currentLang={currentLanguage.code}
-      langs={languageList}
-      setLang={setLanguage}
-      cakePriceUsd={cakePriceUsd.toNumber()}
-      links={config(t)}
-      subLinks={activeMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
-      footerLinks={footerLinks(t)}
-      activeItem={activeMenuItem?.href}
-      activeSubItem={activeSubMenuItem?.href}
-      buyCakeLabel={t('Buy CAKE')}
+      currentLang={selectedLanguage?.code || ''}
+      langs={allLanguages}
+      setLang={setSelectedLanguage}
+      cakePriceUsd={cakePriceUsd}
+      profile={profile}
       {...props}
     />
   )

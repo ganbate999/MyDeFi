@@ -1,11 +1,22 @@
 import { useEffect } from 'react'
-import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
+import useGetPriceData from './useGetPriceData'
+import { CAKE } from '../constants'
 
 const useGetDocumentTitlePrice = () => {
-  const cakePriceBusd = useCakeBusdPrice()
+  const priceData = useGetPriceData()
+
+  const cakePriceUsd = priceData ? parseFloat(priceData.data[CAKE.address].price) : 0
+
+  const cakePriceUsdString =
+    Number.isNaN(cakePriceUsd) || cakePriceUsd === 0
+      ? ''
+      : ` - $${cakePriceUsd.toLocaleString(undefined, {
+          minimumFractionDigits: 3,
+          maximumFractionDigits: 3,
+        })}`
+
   useEffect(() => {
-    const cakePriceBusdString = cakePriceBusd ? cakePriceBusd.toFixed(2) : ''
-    document.title = `Pancake Swap - ${cakePriceBusdString}`
-  }, [cakePriceBusd])
+    document.title = `PancakeSwap${cakePriceUsdString}`
+  }, [cakePriceUsdString])
 }
 export default useGetDocumentTitlePrice

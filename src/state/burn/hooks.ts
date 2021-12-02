@@ -1,24 +1,23 @@
-import { Currency, CurrencyAmount, JSBI, Pair, Percent, TokenAmount } from '@pancakeswap/sdk'
+import { Currency, CurrencyAmount, JSBI, Pair, Percent, TokenAmount } from '@pancakeswap-libs/sdk-v2'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { wrappedCurrency } from 'utils/wrappedCurrency'
-import { usePair } from 'hooks/usePairs'
-import useTotalSupply from 'hooks/useTotalSupply'
+import { usePair } from '../../data/Reserves'
+import { useTotalSupply } from '../../data/TotalSupply'
 
-import { useTranslation } from 'contexts/Localization'
+import { useActiveWeb3React } from '../../hooks'
+import { wrappedCurrency } from '../../utils/wrappedCurrency'
 import { AppDispatch, AppState } from '../index'
 import { tryParseAmount } from '../swap/hooks'
 import { useTokenBalances } from '../wallet/hooks'
 import { Field, typeInput } from './actions'
 
 export function useBurnState(): AppState['burn'] {
-  return useSelector<AppState, AppState['burn']>((state) => state.burn)
+  return useSelector<AppState, AppState['burn']>(state => state.burn)
 }
 
 export function useDerivedBurnInfo(
   currencyA: Currency | undefined,
-  currencyB: Currency | undefined,
+  currencyB: Currency | undefined
 ): {
   pair?: Pair | null
   parsedAmounts: {
@@ -33,8 +32,6 @@ export function useDerivedBurnInfo(
 
   const { independentField, typedValue } = useBurnState()
 
-  const { t } = useTranslation()
-
   // pair + totalsupply
   const [, pair] = usePair(currencyA, currencyB)
 
@@ -46,7 +43,7 @@ export function useDerivedBurnInfo(
   const tokens = {
     [Field.CURRENCY_A]: tokenA,
     [Field.CURRENCY_B]: tokenB,
-    [Field.LIQUIDITY]: pair?.liquidityToken,
+    [Field.LIQUIDITY]: pair?.liquidityToken
   }
 
   // liquidity values
@@ -71,7 +68,7 @@ export function useDerivedBurnInfo(
       : undefined
   const liquidityValues: { [Field.CURRENCY_A]?: TokenAmount; [Field.CURRENCY_B]?: TokenAmount } = {
     [Field.CURRENCY_A]: liquidityValueA,
-    [Field.CURRENCY_B]: liquidityValueB,
+    [Field.CURRENCY_B]: liquidityValueB
   }
 
   let percentToRemove: Percent = new Percent('0', '100')
@@ -90,12 +87,12 @@ export function useDerivedBurnInfo(
   }
   // user specified a specific amount of token a or b
   else if (tokens[independentField]) {
-    const independentAmount = tryParseAmount(typedValue, tokens[independentField])
-    const liquidityValue = liquidityValues[independentField]
-    if (independentAmount && liquidityValue && !independentAmount.greaterThan(liquidityValue)) {
-      percentToRemove = new Percent(independentAmount.raw, liquidityValue.raw)
+      const independentAmount = tryParseAmount(typedValue, tokens[independentField])
+      const liquidityValue = liquidityValues[independentField]
+      if (independentAmount && liquidityValue && !independentAmount.greaterThan(liquidityValue)) {
+        percentToRemove = new Percent(independentAmount.raw, liquidityValue.raw)
+      }
     }
-  }
 
   const parsedAmounts: {
     [Field.LIQUIDITY_PERCENT]: Percent
@@ -115,16 +112,16 @@ export function useDerivedBurnInfo(
     [Field.CURRENCY_B]:
       tokenB && percentToRemove && percentToRemove.greaterThan('0') && liquidityValueB
         ? new TokenAmount(tokenB, percentToRemove.multiply(liquidityValueB.raw).quotient)
-        : undefined,
+        : undefined
   }
 
   let error: string | undefined
   if (!account) {
-    error = t('Connect Wallet')
+    error = 'Connect Wallet'
   }
 
   if (!parsedAmounts[Field.LIQUIDITY] || !parsedAmounts[Field.CURRENCY_A] || !parsedAmounts[Field.CURRENCY_B]) {
-    error = error ?? t('Enter an amount')
+    error = error ?? 'Enter an amount'
   }
 
   return { pair, parsedAmounts, error }
@@ -139,10 +136,10 @@ export function useBurnActionHandlers(): {
     (field: Field, typedValue: string) => {
       dispatch(typeInput({ field, typedValue }))
     },
-    [dispatch],
+    [dispatch]
   )
 
   return {
-    onUserInput,
+    onUserInput
   }
 }

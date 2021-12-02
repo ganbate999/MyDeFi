@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react'
  * @param value changing value
  * @param filterFn function that determines whether a given value should be considered for the last value
  */
-function useLast<T>(
+export default function useLast<T>(
   value: T | undefined | null,
-  filterFn?: (value: T | null | undefined) => boolean,
+  filterFn?: (value: T | null | undefined) => boolean
 ): T | null | undefined {
   const [last, setLast] = useState<T | null | undefined>(filterFn && filterFn(value) ? value : undefined)
   useEffect(() => {
@@ -28,8 +28,6 @@ function isDefined<T>(x: T | null | undefined): x is T {
  * Returns the last truthy value of type T
  * @param value changing value
  */
-function useLastTruthy<T>(value: T | undefined | null): T | null | undefined {
+export function useLastTruthy<T>(value: T | undefined | null): T | null | undefined {
   return useLast(value, isDefined)
 }
-
-export default useLastTruthy
